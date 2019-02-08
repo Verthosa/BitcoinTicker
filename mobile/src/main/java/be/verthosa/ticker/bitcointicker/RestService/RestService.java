@@ -22,7 +22,55 @@ public class RestService {
         _url = url;
     }
 
-    public JSONObject getJSONObject(){
+    public JSONObject getPriceObject(){
+        HttpURLConnection connection = null;
+        BufferedReader reader = null;
+
+        try {
+            URL url = new URL(_url);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.connect();
+
+            InputStream stream = connection.getInputStream();
+
+            reader = new BufferedReader(new InputStreamReader(stream));
+
+            StringBuilder buffer = new StringBuilder();
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                buffer.append(line).append("\n");
+            }
+
+            try {
+                return new JSONObject(buffer.toString());
+            } catch (JSONException e) {
+                // return e.getMessage();
+            }
+
+            return null;
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+    }
+
+    public JSONObject getNewsObject(){
         HttpURLConnection connection = null;
         BufferedReader reader = null;
 

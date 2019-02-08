@@ -15,6 +15,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.RemoteInput;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -22,6 +23,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.HttpURLConnection;
 
+import be.verthosa.ticker.bitcointicker.Helpers.Constants;
 import be.verthosa.ticker.bitcointicker.Helpers.Helpers;
 import be.verthosa.ticker.bitcointicker.R;
 import be.verthosa.ticker.bitcointicker.RestService.RestService;
@@ -136,19 +138,18 @@ public class PriceTickerService extends Service {
                 String crypto = prefs.getString("crypto", null);
                 String fiat = prefs.getString("fiat", null);
 
-                // MODIFY TO https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?CMC_PRO_API_KEY=ccf26a87-6f88-4239-92d1-037b48dc8d15&symbol=BTC&convert=EUR
-                String restUrl = "https://api.coinmarketcap.com/v1/ticker/bitcoin/?convert=EUR";
-                String propertyToRead = "price_usd";
+                String restUrl = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?CMC_PRO_API_KEY=" + Constants.CMCKEY + "&symbol=BTC&convert=EUR";
 
                 if (crypto != null && fiat != null) {
-                    restUrl = "https://api.coinmarketcap.com/v1/ticker/" + crypto + "/?convert=" + fiat;
-                    propertyToRead = "price_" + fiat.toLowerCase();
+                    restUrl = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?CMC_PRO_API_KEY=ccf26a87-6f88-4239-92d1-037b48dc8d15&symbol=" + crypto.toUpperCase() + "&convert=" + fiat.toUpperCase();
                 }
 
-                RestService restService = new RestService(restUrl);
-                JSONObject restObject = restService.getJSONObject();
+                 RestService restService = new RestService(restUrl);
+                JSONObject priceObj = restService.getPriceObject();
 
-                return restObject.getString(propertyToRead);
+                String price = priceObj.getJSONObject("data").getJSONObject(crypto.toUpperCase()).getJSONObject("quote").getJSONObject(fiat.toUpperCase()).getString("price");
+
+                return price;
             }catch(Exception ex){
                 Log.e("bitcointicker", "Error getting prices");
                 Log.e("bitcointicker", ex.getMessage());
@@ -198,7 +199,7 @@ public class PriceTickerService extends Service {
                 double percent = round(change*100, 2);
 
                 if(percent > limitPercentage || percent < negativeLimitPercentage){
-                    String notificationTitle = crypto + ": " + percent + "% :: " + fiat + price;
+                    String notificationTitle = crypto + "/" + fiat + " " + percent + "% " + price;
                     String notificationText = crypto + " is now worth " + price + " " + fiat;
 
                     showCarNotification(notificationTitle, notificationText, percent > 0);
@@ -208,7 +209,7 @@ public class PriceTickerService extends Service {
                     editor.commit();
                 }
             }else{
-                String notificationTitle = crypto + ": " + fiat + price;
+                String notificationTitle = crypto + "/" + fiat + " " + price;
                 String notificationText = crypto + " is now worth " + price + " " + fiat;
 
                 showCarNotification(notificationTitle, notificationText, null);

@@ -18,6 +18,7 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
+import be.verthosa.ticker.bitcointicker.Helpers.Constants;
 import be.verthosa.ticker.bitcointicker.Helpers.Helpers;
 import be.verthosa.ticker.bitcointicker.Models.NewsFact;
 import be.verthosa.ticker.bitcointicker.R;
@@ -131,8 +132,8 @@ public class NewsTickerService extends Service {
             try {
                 Helpers.updateTimings(getApplicationContext(), "NEWS");
 
-                RestService restService = new RestService("https://cryptocontrol.io/api/v1/public/news?key=a1520f97fcd1c5b78318f2a2500bfb8d&latest=true");
-                JSONObject restObject = restService.getJSONObject();
+                RestService restService = new RestService("https://cryptocontrol.io/api/v1/public/news?key=" + Constants.CRYPTOCONTROLKEY + "&latest=true");
+                JSONObject restObject = restService.getNewsObject();
 
                 String id = restObject.getString("_id");
                 String title = restObject.getString("title");
