@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context="be.verthosa.ticker.bitcointicker.MainActivity">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cryptocurrency" />
+
+    <Spinner
+        android:id="@+id/cryptoSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:entries="@array/crypto_array"
+        android:minWidth="1000dp"
+        android:prompt="@string/crypto_prompt" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Conversion currency" />
+
+    <Spinner
+        android:id="@+id/fiatSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:entries="@array/fiat_array"
+        android:minWidth="1000dp"
+        android:prompt="@string/fiat_prompt" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Refresh minutes" />
+
+    <TextView
+        android:id="@+id/txtInterval"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="5"
+        android:textAlignment="center"
+        android:textStyle="italic" />
+
+    <SeekBar
+        android:id="@+id/intervalSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:max="60"
+        android:progress="5" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Percentage" />
+
+    <EditText
+        android:id="@+id/inputPercentage"
+        android:layout_width="98dp"
+        android:layout_height="60dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="0.01"
+        android:textStyle="italic"
+        tools:text="2" />
+
+    <Button
+        android:id="@+id/saveSettings"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Save settings" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Next price polling time" />
+
+    <TextView
+        android:id="@+id/lblPricePolling"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="unknown" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Next news polling time" />
+
+    <TextView
+        android:id="@+id/lblNewsPolling"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="lblNewsPolling" />
+
+</LinearLayout>

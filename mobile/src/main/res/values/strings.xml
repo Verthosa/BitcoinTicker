@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Crypto Car Notifier</string>
+    <string name="crypto_prompt">Choose a crypto</string>
+    <string name="fiat_prompt">Choose a currency</string>
+
+    <string-array name="crypto_array">
+        <item>Bitcoin</item>
+        <item>DigiByte</item>
+        <item>Electroneum</item>
+        <item>Ethereum</item>
+        <item>Icon</item>
+        <item>Iota</item>
+        <item>Litecoin</item>
+        <item>Lisk</item>
+        <item>Ripple</item>
+        <item>SiaCoin</item>
+        <item>Stellar</item>
+        <item>VeChain</item>
+        <item>Wagerr</item>
+    </string-array>
+
+    <string-array name="fiat_array">
+        <item>USD</item>
+        <item>EUR</item>
+    </string-array>
+</resources>
