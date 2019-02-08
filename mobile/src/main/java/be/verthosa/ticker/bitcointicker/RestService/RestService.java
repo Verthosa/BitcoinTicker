@@ -14,7 +14,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import be.verthosa.ticker.bitcointicker.Models.NewsFact;
 
 public class RestService {
     private String _url;
@@ -36,18 +35,17 @@ public class RestService {
 
             reader = new BufferedReader(new InputStreamReader(stream));
 
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             String line;
 
             while ((line = reader.readLine()) != null) {
-                buffer.append(line + "\n");
+                buffer.append(line).append("\n");
             }
 
             try {
                 JSONArray jsonArray = new JSONArray(buffer.toString());
-                JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-                return jsonObject;
+                return jsonArray.getJSONObject(0);
             } catch (JSONException e) {
                 // return e.getMessage();
             }

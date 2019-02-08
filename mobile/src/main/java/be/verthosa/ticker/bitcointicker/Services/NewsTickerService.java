@@ -27,18 +27,11 @@ public class NewsTickerService extends Service {
     private static final String TAG = NewsTickerService.class.getSimpleName();
 
     private PowerManager.WakeLock mWakeLock;
-    /**
-     * Simply return null, since our Service will not be communicating with * any other components. It just does its work silently.
-     */
 
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
-
-    /**
-     * This is where we initialize. We call this when onStart/onStartCommand is * called by the system. We won't do anything with the intent here, and you * probably won't, either.
-     */
 
     private void handleIntent(Intent intent) {
         // obtain the wake lock
@@ -57,18 +50,11 @@ public class NewsTickerService extends Service {
 
 
         // do the actual work, in a separate thread
-        // new PollTask().execute();
         new NewsTask().execute();
     }
 
-    /**
-     * The Action that indicates that a new message notification
-     * should be sent by this Service.
-     */
-    public static final String READ_ACTION =
-            "be.verthosa.ticker.bitcointicker.MY_ACTION_MESSAGE_READ";
-    public static final String REPLY_ACTION =
-            "be.verthosa.ticker.bitcointicker.MY_ACTION_MESSAGE_REPLY";
+    public static final String READ_ACTION = "be.verthosa.ticker.bitcointicker.MY_ACTION_MESSAGE_READ";
+    public static final String REPLY_ACTION = "be.verthosa.ticker.bitcointicker.MY_ACTION_MESSAGE_REPLY";
 
     public static final String CONVERSATION_ID = "conversation_id";
     public static final String EXTRA_VOICE_REPLY = "extra_voice_reply";
@@ -89,40 +75,28 @@ public class NewsTickerService extends Service {
     private void showCarNotification(String Title, String message, String url){
         Log.d(TAG, "Preparing to show  " + message);
 
-        // A pending Intent for reads
         PendingIntent readPendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
                 14,
                 getMessageReadIntent(14),
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
-        /// Add the code to create the UnreadConversation
-
-        // Build a RemoteInput for receiving voice input in a Car Notification
         RemoteInput remoteInput = new RemoteInput.Builder(EXTRA_VOICE_REPLY)
                 .setLabel("hopla")
                 .build();
 
-        // Building a Pending Intent for the reply action to trigger
         PendingIntent replyIntent = PendingIntent.getBroadcast(getApplicationContext(),
                 14,
                 getMessageReplyIntent(14),
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
-        // Create the UnreadConversation and populate it with the participant name,
-        // read and reply intents.
         NotificationCompat.CarExtender.UnreadConversation.Builder unreadConversationBuilder =
                 new NotificationCompat.CarExtender.UnreadConversation.Builder(Title)
                         .setLatestTimestamp(timestamp)
                         .setReadPendingIntent(readPendingIntent)
                         .setReplyAction(replyIntent, remoteInput);
 
-        // Note: Add messages from oldest to newest to the UnreadConversation.Builder
-        // Since we are sending a single message here we simply add the message.
-        // In a real world application there could be multiple messages which should be ordered
-        // and added from oldest to newest.
         unreadConversationBuilder.addMessage(message);
 
-        /// End create UnreadConversation
 
         Intent notificationIntent = new Intent(Intent.ACTION_VIEW);
         notificationIntent.setData(Uri.parse(url));
@@ -143,7 +117,6 @@ public class NewsTickerService extends Service {
                 /// Extend the notification with CarExtender.
                 .extend(new NotificationCompat.CarExtender()
                         .setUnreadConversation(unreadConversationBuilder.build()));
-        /// End
 
         Log.d(TAG, "Sending notification 14 conversation: " + message);
 
@@ -153,10 +126,6 @@ public class NewsTickerService extends Service {
     }
 
     public class NewsTask extends AsyncTask<Void, Void, NewsFact> {
-        /**
-         * This is where YOU do YOUR work. There's nothing for me to write here * you have to fill this in. Make your HTTP request(s) or whatever it is * you have to do to get your updates in
-         * here, because this is run in a * separate thread
-         */
         @Override
         protected NewsFact doInBackground(Void... Param) {
             try {
@@ -183,7 +152,6 @@ public class NewsTickerService extends Service {
 
         @Override
         protected void onPostExecute(NewsFact result) {
-            // handle your data
             Context context = getApplicationContext();
 
             SharedPreferences prefs = context.getSharedPreferences("be.verthosa.ticker", Context.MODE_PRIVATE);

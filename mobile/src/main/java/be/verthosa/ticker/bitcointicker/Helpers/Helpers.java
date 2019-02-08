@@ -14,7 +14,7 @@ public class Helpers {
     public static int getInterval(Context context){
         String savedInterval = getSharedPreference(context,"interval");
 
-        int interval = 1;
+        int interval = Constants.DEFAULT_PRICE_INTERVAL;
 
         if(savedInterval != null && !savedInterval.equals("")){
             interval = Integer.parseInt(savedInterval);
@@ -27,18 +27,22 @@ public class Helpers {
         int interval = Helpers.getInterval(context);
 
         Date nextPricePolling =  new Date( System.currentTimeMillis() + interval * 60 * 1000);
-        Date nextNewsPolling = new Date( System.currentTimeMillis() + 30 * 60 * 1000);
+        Date nextNewsPolling = new Date( System.currentTimeMillis() + Constants.DEFAULT_NEWS_INTERVAL * 60 * 1000);
 
         SharedPreferences prefs = context.getSharedPreferences("be.verthosa.ticker", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
-        if(which.toUpperCase().equals("ALL")){
-            editor.putString("nextpricepolling", nextPricePolling.toString());
-            editor.putString("nextnewspolling", nextNewsPolling.toString());
-        }else if(which.toUpperCase().equals("PRICE")){
-            editor.putString("nextpricepolling", nextPricePolling.toString());
-        }else if(which.toUpperCase().equals("NEWS")){
-            editor.putString("nextnewspolling", nextNewsPolling.toString());
+        switch (which.toUpperCase()) {
+            case "ALL":
+                editor.putString("nextpricepolling", nextPricePolling.toString());
+                editor.putString("nextnewspolling", nextNewsPolling.toString());
+                break;
+            case "PRICE":
+                editor.putString("nextpricepolling", nextPricePolling.toString());
+                break;
+            case "NEWS":
+                editor.putString("nextnewspolling", nextNewsPolling.toString());
+                break;
         }
 
         editor.commit();

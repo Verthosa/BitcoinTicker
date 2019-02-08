@@ -18,8 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Arrays;
-import java.util.Date;
 
+import be.verthosa.ticker.bitcointicker.Helpers.Constants;
 import be.verthosa.ticker.bitcointicker.Helpers.Helpers;
 import be.verthosa.ticker.bitcointicker.Services.NewsTickerService;
 import be.verthosa.ticker.bitcointicker.Services.PriceTickerService;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         // by my own convention, minutes <= 0 means notifications are disabled
         if (interval > 0) {
             alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + interval * 60 * 1000, interval * 60 * 1000, priceTickerPendingIntent);
-            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 30 * 60 * 1000, interval * 60 * 1000, newsTickerPendingIntent);
+            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + Constants.DEFAULT_NEWS_INTERVAL * 60 * 1000, interval * 60 * 1000, newsTickerPendingIntent);
 
             Helpers.updateTimings(_context, "ALL");
         }
