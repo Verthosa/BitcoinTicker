@@ -8,4 +8,13 @@ public class Constants {
     // seconds.
     public static final int DEFAULT_PRICE_INTERVAL = 10;
     public static final int DEFAULT_NEWS_INTERVAL = 30;
+
+    public static final String READ_ACTION = "be.verthosa.ticker.bitcointicker.MY_ACTION_MESSAGE_READ";
+    public static final String REPLY_ACTION = "be.verthosa.ticker.bitcointicker.MY_ACTION_MESSAGE_REPLY";
+
+    public static final String CONVERSATION_ID = "conversation_id";
+    public static final String EXTRA_VOICE_REPLY = "extra_voice_reply";
+
+    public static final long timestamp = System.currentTimeMillis();
+
 }

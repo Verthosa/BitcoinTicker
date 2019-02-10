@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
 
                 editor.commit();
 
-                CharSequence text = "Saved...";
+                CharSequence text = "Settings saved...";
                 int duration = Toast.LENGTH_SHORT;
 
                 setAlarms();
@@ -193,7 +193,23 @@ public class MainActivity extends AppCompatActivity {
                 // Uncomment to call when clicking.
                 Intent serviceIntent = new Intent(context,PriceTickerService.class);
                 context.startService(serviceIntent);
+
+
+                editor.remove("lastnewsid");
+                editor.commit();
+
+                Intent serviceIntent = new Intent(context,NewsTickerService.class);
+                context.startService(serviceIntent);
+
+
+                editor.remove("lastnewsid");
+                editor.commit();
+
+                Intent serviceIntent = new Intent(context,NewsTickerService.class);
+                context.startService(serviceIntent);
                 */
+
+
             }
         });
     }

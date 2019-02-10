@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Crypto Car Notifier</string>
-    <string name="crypto_prompt">Choose a crypto</string>
-    <string name="fiat_prompt">Choose a currency</string>
+    <string name="crypto_prompt">Choose a crypto currency</string>
+    <string name="fiat_prompt">Choose a fiat currency</string>
 
     <string-array name="crypto_array">
         <item>BTC</item>

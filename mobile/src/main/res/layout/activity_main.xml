@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/colorBackground"
     android:orientation="vertical"
     tools:context="be.verthosa.ticker.bitcointicker.MainActivity">
 
@@ -11,7 +11,13 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cryptocurrency" />
+        android:background="@color/colorPrimaryLight"
+        android:text="Coin select"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
     <Spinner
         android:id="@+id/cryptoSpinner"
@@ -25,7 +31,13 @@
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Conversion currency" />
+        android:background="@color/colorPrimaryLight"
+        android:text="Fiat select"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
     <Spinner
         android:id="@+id/fiatSpinner"
@@ -36,10 +48,39 @@
         android:prompt="@string/fiat_prompt" />
 
     <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryLight"
+        android:text="Percentage change to notify"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/inputPercentage"
+        android:layout_width="98dp"
+        android:layout_height="60dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:paddingLeft="50dp"
+        android:text="0.01"
+        android:textStyle="italic"
+        tools:text="2" />
+
+    <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Refresh minutes" />
+        android:background="@color/colorPrimaryLight"
+        android:text="Refresh minutes"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txtInterval"
@@ -52,54 +93,60 @@
     <SeekBar
         android:id="@+id/intervalSeekBar"
         android:layout_width="match_parent"
-        android:layout_height="43dp"
+        android:layout_height="36dp"
         android:max="60"
         android:progress="5" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Percentage" />
-
-    <EditText
-        android:id="@+id/inputPercentage"
-        android:layout_width="98dp"
-        android:layout_height="60dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:text="0.01"
-        android:textStyle="italic"
-        tools:text="2" />
 
     <Button
         android:id="@+id/saveSettings"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="Save settings" />
+        android:layout_height="62dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/buttonborder"
+        android:drawableLeft="@drawable/ic_outline_done_24px"
+        android:elevation="10dp"
+        android:text="Save settings"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Next price polling time" />
+        android:text="Next price polling time"
+        android:textAlignment="viewEnd"
+        android:textColor="@color/colorSecondaryText"
+        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/lblPricePolling"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="unknown" />
+        android:text="unknown"
+        android:textAlignment="viewEnd"
+        android:textColor="@color/colorSecondaryText"
+        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Next news polling time" />
+        android:text="Next news polling time"
+        android:textAlignment="viewEnd"
+        android:textColor="@color/colorSecondaryText"
+        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/lblNewsPolling"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="lblNewsPolling" />
+        android:text="lblNewsPolling"
+        android:textAlignment="viewEnd"
+        android:textColor="@color/colorSecondaryText"
+        android:textStyle="italic" />
 
 </LinearLayout>
