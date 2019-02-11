@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
 
+import be.verthosa.ticker.bitcointicker.Helpers.Constants;
+import be.verthosa.ticker.bitcointicker.Helpers.Helpers;
+import be.verthosa.ticker.bitcointicker.Services.News2TickerService;
 import be.verthosa.ticker.bitcointicker.Services.NewsTickerService;
 import be.verthosa.ticker.bitcointicker.Services.PriceTickerService;
 
@@ -39,18 +42,23 @@ public class BootReceiver extends BroadcastReceiver {
 
         Intent priceTickerIntent = new Intent(context, PriceTickerService.class);
         Intent newsTickerIntent = new Intent(context, NewsTickerService.class);
+        Intent newsTickerIntent2 = new Intent(context, News2TickerService.class);
 
         PendingIntent priceTickerPendingIntent = PendingIntent.getService(context, 0, priceTickerIntent, 0);
         PendingIntent newsTickerPendingIntent = PendingIntent.getService(context, 0, newsTickerIntent, 0);
+        PendingIntent newsTickerPendingIntent2 = PendingIntent.getService(context, 0, newsTickerIntent2, 0);
 
         alarmManager.cancel(priceTickerPendingIntent);
         alarmManager.cancel(newsTickerPendingIntent);
+        alarmManager.cancel(newsTickerPendingIntent2);
 
         // by my own convention, minutes <= 0 means notifications are disabled
         if (interval > 0) {
             alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + interval * 60 * 1000, interval * 60 * 1000, priceTickerPendingIntent);
-            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 30 * 60 * 1000, interval * 60 * 1000, newsTickerPendingIntent);
+            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + Constants.CRYPTOCONTROL_NEWS_INTERVAL * 60 * 1000, interval * 60 * 1000, newsTickerPendingIntent);
+            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + Constants.CRYPTOCOMPARE_NEWS_INTERVAL * 60 * 1000, interval * 60 * 1000, newsTickerPendingIntent2);
 
+            Helpers.updateTimings(_context, "ALL");
         }
     }
 }

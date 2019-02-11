@@ -37,6 +37,11 @@
             android:enabled="true"
             android:exported="true" />
 
+        <service
+            android:name=".Services.News2TickerService"
+            android:enabled="true"
+            android:exported="true" />
+
         <receiver android:name=".Receivers.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

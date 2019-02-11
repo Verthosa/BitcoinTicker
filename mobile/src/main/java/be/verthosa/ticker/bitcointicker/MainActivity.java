@@ -21,6 +21,7 @@ import java.util.Arrays;
 
 import be.verthosa.ticker.bitcointicker.Helpers.Constants;
 import be.verthosa.ticker.bitcointicker.Helpers.Helpers;
+import be.verthosa.ticker.bitcointicker.Services.News2TickerService;
 import be.verthosa.ticker.bitcointicker.Services.NewsTickerService;
 import be.verthosa.ticker.bitcointicker.Services.PriceTickerService;
 
@@ -36,17 +37,21 @@ public class MainActivity extends AppCompatActivity {
 
         Intent priceTickerIntent = new Intent(this, PriceTickerService.class);
         Intent newsTickerIntent = new Intent(this, NewsTickerService.class);
+        Intent newsTickerIntent2 = new Intent(this, News2TickerService.class);
 
         PendingIntent priceTickerPendingIntent = PendingIntent.getService(this, 0, priceTickerIntent, 0);
         PendingIntent newsTickerPendingIntent = PendingIntent.getService(this, 0, newsTickerIntent, 0);
+        PendingIntent newsTickerPendingIntent2 = PendingIntent.getService(this, 0, newsTickerIntent2, 0);
 
         alarmManager.cancel(priceTickerPendingIntent);
         alarmManager.cancel(newsTickerPendingIntent);
+        alarmManager.cancel(newsTickerPendingIntent2);
 
         // by my own convention, minutes <= 0 means notifications are disabled
         if (interval > 0) {
             alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + interval * 60 * 1000, interval * 60 * 1000, priceTickerPendingIntent);
-            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + Constants.DEFAULT_NEWS_INTERVAL * 60 * 1000, interval * 60 * 1000, newsTickerPendingIntent);
+            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + Constants.CRYPTOCONTROL_NEWS_INTERVAL * 60 * 1000, interval * 60 * 1000, newsTickerPendingIntent);
+            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + Constants.CRYPTOCOMPARE_NEWS_INTERVAL * 60 * 1000, interval * 60 * 1000, newsTickerPendingIntent2);
 
             Helpers.updateTimings(_context, "ALL");
         }
@@ -168,10 +173,14 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = prefs.edit();
 
                     editor.remove("lastnewsid");
+                    editor.remove("lastcomparenewsid");
                     editor.commit();
 
-                    Intent serviceIntent = new Intent(getApplicationContext(),NewsTickerService.class);
+                    Intent serviceIntent = new Intent(getApplicationContext(), NewsTickerService.class);
                     getApplicationContext().startService(serviceIntent);
+
+                    Intent serviceIntent2 = new Intent(getApplicationContext(), News2TickerService.class);
+                    getApplicationContext().startService(serviceIntent2);
                 }
                 });
     }
@@ -208,6 +217,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if(prefs.contains("lastnewsid")){
                     editor.remove("lastnewsid");
+                }
+
+                if(prefs.contains("lastcomparenewsid")){
+                    editor.remove("lastcomparenewsid");
                 }
 
                 editor.commit();
