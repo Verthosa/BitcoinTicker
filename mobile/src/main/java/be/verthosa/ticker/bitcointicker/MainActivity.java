@@ -43,12 +43,14 @@ public class MainActivity extends AppCompatActivity {
         PendingIntent newsTickerPendingIntent = PendingIntent.getService(this, 0, newsTickerIntent, 0);
         PendingIntent newsTickerPendingIntent2 = PendingIntent.getService(this, 0, newsTickerIntent2, 0);
 
-        alarmManager.cancel(priceTickerPendingIntent);
-        alarmManager.cancel(newsTickerPendingIntent);
-        alarmManager.cancel(newsTickerPendingIntent2);
+        if(alarmManager != null){
+            alarmManager.cancel(priceTickerPendingIntent);
+            alarmManager.cancel(newsTickerPendingIntent);
+            alarmManager.cancel(newsTickerPendingIntent2);
+        }
 
         // by my own convention, minutes <= 0 means notifications are disabled
-        if (interval > 0) {
+        if (interval > 0 && alarmManager != null) {
             alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + interval * 60 * 1000, interval * 60 * 1000, priceTickerPendingIntent);
             alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + Constants.CRYPTOCONTROL_NEWS_INTERVAL * 60 * 1000, interval * 60 * 1000, newsTickerPendingIntent);
             alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + Constants.CRYPTOCOMPARE_NEWS_INTERVAL * 60 * 1000, interval * 60 * 1000, newsTickerPendingIntent2);
@@ -64,9 +66,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setLogo(R.drawable.ic_outline_show_chart_24px);
-        actionBar.setDisplayUseLogoEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+
+        if(actionBar != null){
+            actionBar.setLogo(R.drawable.ic_outline_show_chart_24px);
+            actionBar.setDisplayUseLogoEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+        }
 
         _context = getApplicationContext();
 
@@ -157,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
     public void addListenersTestButtons(){
         Button btnTestPrice = findViewById(R.id.btnTestPrice);
         Button btnTestNews = findViewById(R.id.btnTestNews);
+        Button btnTestNews2 = findViewById(R.id.btnTestNews2);
 
         btnTestPrice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,16 +179,27 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = prefs.edit();
 
                     editor.remove("lastnewsid");
-                    editor.remove("lastcomparenewsid");
                     editor.commit();
 
                     Intent serviceIntent = new Intent(getApplicationContext(), NewsTickerService.class);
                     getApplicationContext().startService(serviceIntent);
-
-                    Intent serviceIntent2 = new Intent(getApplicationContext(), News2TickerService.class);
-                    getApplicationContext().startService(serviceIntent2);
-                }
+               }
                 });
+
+        btnTestNews2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences prefs = getApplicationContext().getSharedPreferences("be.verthosa.ticker", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+
+                editor.remove("lastcomparenewsid");
+                editor.commit();
+
+
+                Intent serviceIntent2 = new Intent(getApplicationContext(), News2TickerService.class);
+                getApplicationContext().startService(serviceIntent2);
+            }
+        });
     }
 
     // get the selected dropdown list value

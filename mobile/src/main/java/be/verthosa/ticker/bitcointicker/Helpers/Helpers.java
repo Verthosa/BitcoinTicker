@@ -83,7 +83,7 @@ public class Helpers {
 
         unreadConversationBuilder.addMessage(message);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "Car Notifier Notifications Channel")
                 .setSmallIcon(iconId)
                 .setLargeIcon(icon)
                 .setContentText(message)

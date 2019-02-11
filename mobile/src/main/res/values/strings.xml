@@ -2,6 +2,22 @@
     <string name="app_name">Crypto Car Notifier</string>
     <string name="crypto_prompt">Choose a crypto currency</string>
     <string name="fiat_prompt">Choose a fiat currency</string>
+    <string name="coin_select">Coin select</string>
+    <string name="fiat_select">Fiat select</string>
+    <string name="percentage_change_to_notify">Percentage change to notify</string>
+    <string name="defaultPercentage">0.01</string>
+    <string name="refresh_minutes">Refresh minutes</string>
+    <string name="defaultInterval">5</string>
+    <string name="save_settings">Save settings</string>
+    <string name="next_price_polling_time">Next price polling time</string>
+    <string name="unknown">unknown</string>
+    <string name="next_news_polling_time">Next news polling time</string>
+    <string name="lblnewspolling">lblNewsPolling</string>
+    <string name="testing_buttons">Testing buttons</string>
+    <string name="price">Price</string>
+    <string name="news">News</string>
+    <string name="news_2">News 2</string>
+    <string name="percentage_sign">%</string>
 
     <string-array name="crypto_array">
         <item>BTC</item>
