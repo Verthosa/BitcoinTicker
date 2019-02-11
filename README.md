@@ -12,4 +12,4 @@ Use following steps to force the app working:
 3) adb shell pm install -i "com.android.vending" -r /sdcard/app.apk
 4) adb shell rm /sdcard/app.apk
 
-Now your notifications will also be shown on Android Auto dashboard.
+The com.android.vending part of the installation mimics the fact that you downloaded the app from the Play Store. This way it will be supported by Android Auto. Now your notifications should be shown on your car display.
