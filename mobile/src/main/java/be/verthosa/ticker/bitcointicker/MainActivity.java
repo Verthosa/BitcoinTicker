@@ -21,8 +21,8 @@ import java.util.Arrays;
 
 import be.verthosa.ticker.bitcointicker.Helpers.Constants;
 import be.verthosa.ticker.bitcointicker.Helpers.Helpers;
-import be.verthosa.ticker.bitcointicker.Services.News2TickerService;
-import be.verthosa.ticker.bitcointicker.Services.NewsTickerService;
+import be.verthosa.ticker.bitcointicker.Services.NewsCryptoCompareService;
+import be.verthosa.ticker.bitcointicker.Services.NewsCryptoControlService;
 import be.verthosa.ticker.bitcointicker.Services.PriceTickerService;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         Intent priceTickerIntent = new Intent(this, PriceTickerService.class);
-        Intent newsTickerIntent = new Intent(this, NewsTickerService.class);
-        Intent newsTickerIntent2 = new Intent(this, News2TickerService.class);
+        Intent newsTickerIntent = new Intent(this, NewsCryptoControlService.class);
+        Intent newsTickerIntent2 = new Intent(this, NewsCryptoCompareService.class);
 
         PendingIntent priceTickerPendingIntent = PendingIntent.getService(this, 0, priceTickerIntent, 0);
         PendingIntent newsTickerPendingIntent = PendingIntent.getService(this, 0, newsTickerIntent, 0);
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                     editor.remove("lastnewsid");
                     editor.commit();
 
-                    Intent serviceIntent = new Intent(getApplicationContext(), NewsTickerService.class);
+                    Intent serviceIntent = new Intent(getApplicationContext(), NewsCryptoControlService.class);
                     getApplicationContext().startService(serviceIntent);
                }
                 });
@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
                 editor.commit();
 
 
-                Intent serviceIntent2 = new Intent(getApplicationContext(), News2TickerService.class);
+                Intent serviceIntent2 = new Intent(getApplicationContext(), NewsCryptoCompareService.class);
                 getApplicationContext().startService(serviceIntent2);
             }
         });

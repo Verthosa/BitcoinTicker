@@ -70,7 +70,7 @@ public class RestService {
         return null;
     }
 
-    public JSONObject getNewsObject(){
+    public JSONObject getCryptoControlNewsObject(){
         HttpURLConnection connection = null;
         BufferedReader reader = null;
 
@@ -120,7 +120,7 @@ public class RestService {
         return null;
     }
 
-    public JSONObject getNews2Object(){
+    public JSONObject getCryptoCompareNewsObject(){
         HttpURLConnection connection = null;
         BufferedReader reader = null;
 

@@ -10,8 +10,8 @@ import android.os.SystemClock;
 
 import be.verthosa.ticker.bitcointicker.Helpers.Constants;
 import be.verthosa.ticker.bitcointicker.Helpers.Helpers;
-import be.verthosa.ticker.bitcointicker.Services.News2TickerService;
-import be.verthosa.ticker.bitcointicker.Services.NewsTickerService;
+import be.verthosa.ticker.bitcointicker.Services.NewsCryptoCompareService;
+import be.verthosa.ticker.bitcointicker.Services.NewsCryptoControlService;
 import be.verthosa.ticker.bitcointicker.Services.PriceTickerService;
 
 /**
@@ -41,8 +41,8 @@ public class BootReceiver extends BroadcastReceiver {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent priceTickerIntent = new Intent(context, PriceTickerService.class);
-        Intent newsTickerIntent = new Intent(context, NewsTickerService.class);
-        Intent newsTickerIntent2 = new Intent(context, News2TickerService.class);
+        Intent newsTickerIntent = new Intent(context, NewsCryptoControlService.class);
+        Intent newsTickerIntent2 = new Intent(context, NewsCryptoCompareService.class);
 
         PendingIntent priceTickerPendingIntent = PendingIntent.getService(context, 0, priceTickerIntent, 0);
         PendingIntent newsTickerPendingIntent = PendingIntent.getService(context, 0, newsTickerIntent, 0);
