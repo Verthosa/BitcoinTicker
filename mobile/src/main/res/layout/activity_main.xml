@@ -4,6 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/colorBackground"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context="be.verthosa.ticker.bitcointicker.MainActivity">
 
@@ -148,5 +149,61 @@
         android:textAlignment="viewEnd"
         android:textColor="@color/colorSecondaryText"
         android:textStyle="italic" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:textAlignment="center">
+
+            <Button
+                android:id="@+id/btnTestPrice"
+                android:layout_width="200dp"
+                android:layout_height="31dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/buttonborder"
+                android:drawableLeft="@drawable/ic_outline_done_24px"
+                android:elevation="10dp"
+                android:text="Test price"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnTestNews"
+                android:layout_width="200dp"
+                android:layout_height="31dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/buttonborder"
+                android:drawableLeft="@drawable/ic_outline_done_24px"
+                android:elevation="10dp"
+                android:text="test news"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </TableLayout>
 
 </LinearLayout>

@@ -66,7 +66,7 @@ public class PriceTickerService extends Service {
                 String restUrl = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?CMC_PRO_API_KEY=" + Constants.CMCKEY + "&symbol=BTC&convert=EUR";
 
                 if (crypto != null && fiat != null) {
-                    restUrl = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?CMC_PRO_API_KEY=ccf26a87-6f88-4239-92d1-037b48dc8d15&symbol=" + crypto.toUpperCase() + "&convert=" + fiat.toUpperCase();
+                    restUrl = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?CMC_PRO_API_KEY=" + Constants.CMCKEY + "&symbol=" + crypto.toUpperCase() + "&convert=" + fiat.toUpperCase();
                 }
 
                  RestService restService = new RestService(restUrl);
@@ -125,7 +125,7 @@ public class PriceTickerService extends Service {
 
                 if(percent > limitPercentage || percent < negativeLimitPercentage){
                     String notificationTitle = crypto + "/" + fiat + " " + percent + "% " + price;
-                    String notificationText = crypto + " is now worth " + price + " " + fiat;
+                    String notificationText = crypto + " - value = " + price + " " + fiat;
 
                     Helpers.showPriceNotification(context, notificationTitle, notificationText, percent > 0);
 
@@ -135,7 +135,7 @@ public class PriceTickerService extends Service {
                 }
             }else{
                 String notificationTitle = crypto + "/" + fiat + " " + price;
-                String notificationText = crypto + " is now worth " + price + " " + fiat;
+                String notificationText = crypto + " - value = " + price + " " + fiat;
 
                 Helpers.showPriceNotification(context, notificationTitle, notificationText, null);
 

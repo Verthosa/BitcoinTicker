@@ -50,16 +50,17 @@ public class Helpers {
         Random random = new Random();
 
         showCarNotification(context, title, message, url, random.nextInt(), BitmapFactory.decodeResource(
-                context.getResources(), R.drawable.ic_outline_notification_important_24px));
+                context.getResources(), R.drawable.ic_outline_notification_important_24px), R.drawable.ic_outline_notification_important_24px);
     }
 
     public static void showPriceNotification(Context context, String title, String message, Boolean isAscending){
-        Bitmap icon = BitmapFactory.decodeResource(context.getResources(), isAscending == null ? R.drawable.ic_outline_show_chart_24px : isAscending ? R.drawable.ic_outline_trending_up_24px : R.drawable.ic_outline_trending_down_24px);
+        Bitmap icon = BitmapFactory.decodeResource(context.getResources(), isAscending == null ? R.drawable.ic_outline_grade_24px : isAscending ? R.drawable.ic_outline_trending_up_24px : R.drawable.ic_outline_trending_down_24px);
+        int iconId = isAscending == null ? R.drawable.ic_outline_grade_24px : isAscending ? R.drawable.ic_outline_trending_up_24px : R.drawable.ic_outline_trending_down_24px;
 
-        showCarNotification(context, title, message, "", 9876, icon);
+        showCarNotification(context, title, message, "", 9876, icon, iconId);
     }
 
-    private static void showCarNotification(Context context, String Title, String message, String url, int uid, Bitmap icon){
+    private static void showCarNotification(Context context, String Title, String message, String url, int uid, Bitmap icon, int iconId){
         PendingIntent readPendingIntent = PendingIntent.getBroadcast(context,
                 uid,
                 getMessageReadIntent(uid),
@@ -83,7 +84,7 @@ public class Helpers {
         unreadConversationBuilder.addMessage(message);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.ic_error_outline_24px)
+                .setSmallIcon(iconId)
                 .setLargeIcon(icon)
                 .setContentText(message)
                 .setWhen(Constants.timestamp)

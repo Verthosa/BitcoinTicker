@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         setSpinners();
         addListenerOnButton();
+        addListenersTestButtons();
 
         setAlarms();
         setTimings();
@@ -148,6 +149,33 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    public void addListenersTestButtons(){
+        Button btnTestPrice = findViewById(R.id.btnTestPrice);
+        Button btnTestNews = findViewById(R.id.btnTestNews);
+
+        btnTestPrice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent serviceIntent = new Intent(getApplicationContext(), PriceTickerService.class);
+                getApplicationContext().startService(serviceIntent);
+            }
+            });
+
+        btnTestNews.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    SharedPreferences prefs = getApplicationContext().getSharedPreferences("be.verthosa.ticker", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+
+                    editor.remove("lastnewsid");
+                    editor.commit();
+
+                    Intent serviceIntent = new Intent(getApplicationContext(),NewsTickerService.class);
+                    getApplicationContext().startService(serviceIntent);
+                }
+                });
+    }
+
     // get the selected dropdown list value
     public void addListenerOnButton() {
 
@@ -178,6 +206,10 @@ public class MainActivity extends AppCompatActivity {
                     editor.remove("lastprice");
                 }
 
+                if(prefs.contains("lastnewsid")){
+                    editor.remove("lastnewsid");
+                }
+
                 editor.commit();
 
                 CharSequence text = "Settings saved...";
@@ -188,28 +220,6 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
-
-                /*
-                // Uncomment to call when clicking.
-                Intent serviceIntent = new Intent(context,PriceTickerService.class);
-                context.startService(serviceIntent);
-
-
-                editor.remove("lastnewsid");
-                editor.commit();
-
-                Intent serviceIntent = new Intent(context,NewsTickerService.class);
-                context.startService(serviceIntent);
-
-
-                editor.remove("lastnewsid");
-                editor.commit();
-
-                Intent serviceIntent = new Intent(context,NewsTickerService.class);
-                context.startService(serviceIntent);
-                */
-
-
             }
         });
     }
