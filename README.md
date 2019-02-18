@@ -1,5 +1,5 @@
 # BitcoinTicker
-Sample application for cryptocurrency ticker and news notifications with android auto support
+Native Android demo application for cryptocurrency ticker and news notifications with android auto support
 
 To make it work with android auto, the application needs to mimick an android auto app. This is because android auto apps only supports notifications for messaging applications such as WhatsApp/Messenger/SMS - for safety reasons obviously. This is also the reason that, at the moment, i cannot get this app in the Play Store. 
 
