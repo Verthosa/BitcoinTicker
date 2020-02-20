@@ -4,11 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.RemoteInput;
 import android.util.Log;
 
+import androidx.core.app.RemoteInput;
+
 import be.verthosa.ticker.bitcointicker.Helpers.Constants;
-import be.verthosa.ticker.bitcointicker.Helpers.Helpers;
 import be.verthosa.ticker.bitcointicker.Services.PriceTickerService;
 
 public class MyMessageReplyReceiver extends BroadcastReceiver {

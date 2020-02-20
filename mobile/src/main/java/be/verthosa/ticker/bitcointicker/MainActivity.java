@@ -1,13 +1,18 @@
 package be.verthosa.ticker.bitcointicker;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -83,7 +88,51 @@ public class MainActivity extends AppCompatActivity {
         setTimings();
     }
 
+    private void checkPermission(String Permission) {
+        int permissionCheck = ContextCompat.checkSelfPermission(
+                this, Permission);
+        if (permissionCheck != 1) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Permission)) {
+               showExplanation("Permission Needed", "Rationale", Permission, 4141);
+            } else {
+                requestPermission(Permission, 4141);
+            }
+        } else {
+            Toast.makeText(MainActivity.this, "Permission (already) Granted!", Toast.LENGTH_SHORT).show();
+        }
+    }
 
+    private void showExplanation(String title,
+                                 String message,
+                                 final String permission,
+                                 final int permissionRequestCode) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        requestPermission(permission, permissionRequestCode);
+                    }
+                });
+        builder.create().show();
+    }
+
+    private void requestPermission(String permissionName, int permissionRequestCode) {
+        ActivityCompat.requestPermissions(this,
+                new String[]{permissionName}, permissionRequestCode);
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    {
+        if (requestCode == 4141) {
+            if (grantResults.length > 0 && grantResults[0] == 1) {
+                Toast.makeText(MainActivity.this, "Permission OK", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
     private static boolean isSet(String param) {
         // doesn't ignore spaces, but does save an object creation.
         return param != null && param.length() != 0;
@@ -141,10 +190,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+    final SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             // updated continuously as the user slides the thumb
+            txtInterval = findViewById(R.id.txtInterval);
             txtInterval.setText(seekBar.getProgress() + "");
         }
 
@@ -179,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = prefs.edit();
 
                     editor.remove("lastnewsid");
-                    editor.commit();
+                    editor.apply();
 
                     Intent serviceIntent = new Intent(getApplicationContext(), NewsCryptoControlService.class);
                     getApplicationContext().startService(serviceIntent);
@@ -193,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = prefs.edit();
 
                 editor.remove("lastcomparenewsid");
-                editor.commit();
+                editor.apply();
 
 
                 Intent serviceIntent2 = new Intent(getApplicationContext(), NewsCryptoCompareService.class);
@@ -213,6 +263,9 @@ public class MainActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // checkPermission(Manifest.permission.INTERNET);
+
                 // Take action.
                 Context context = getApplicationContext();
 
@@ -240,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                     editor.remove("lastcomparenewsid");
                 }
 
-                editor.commit();
+                editor.apply();
 
                 CharSequence text = "Settings saved...";
                 int duration = Toast.LENGTH_SHORT;
